@@ -25,6 +25,28 @@ function tr(x, y, z) {
   translate(x, y, z);
 }
 
+function pts(points) {
+  for (let i = 0; i < points.length; i++) {
+    const point = points[i];
+    pt(point[0], point[1], point[2]);
+  }
+}
+
+function chain(points) {
+  for (let i = 0; i < points.length; i++) {
+    const point = points[i];
+    pt(point[0], point[1], point[2]);
+    if (i < points.length - 1)
+      line(point[0], point[1], point[2], points[i + 1][0], points[i + 1][1], points[i + 1][2]);
+  }
+}
+
+
+function grid2d(dx, dy) {
+  for (let x = 0; x < dx; x++)
+    for (let y = 0; y < dy; y++)
+      pt(x, y);
+}
 
 function setup() {
   const canvas = createCanvas(1024, 768, WEBGL).elt;
@@ -38,11 +60,11 @@ function draw() {
     background("white")
     stroke('black');
     const sensivityRotation = 5;
-    const sensivityZoom = 0.5;
+    const sensivityZoom = 0.1;
     orbitControl(sensivityRotation, sensivityRotation, sensivityZoom);
 
     scale(50);
-    strokeWeight(2);
+    strokeWeight(1);
 
     eval(code.value);
   }
