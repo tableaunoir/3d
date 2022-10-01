@@ -21,6 +21,10 @@ function bg(color) {
   background(color);
 }
 
+function tr(x, y, z) {
+  translate(x, y, z);
+}
+
 
 function setup() {
   const canvas = createCanvas(1024, 768, WEBGL).elt;
