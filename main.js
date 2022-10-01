@@ -23,7 +23,8 @@ function bg(color) {
 
 
 function setup() {
-  createCanvas(1024, 768, WEBGL);
+  const canvas = createCanvas(1024, 768, WEBGL).elt;
+  wrapper.appendChild(canvas);
   normalMaterial();
 }
 
@@ -32,10 +33,13 @@ function draw() {
     error.hidden = true;
     background("white")
     stroke('black');
+    const sensivityRotation = 5;
+    const sensivityZoom = 0.5;
+    orbitControl(sensivityRotation, sensivityRotation, sensivityZoom);
+
     scale(50);
     strokeWeight(2);
 
-    orbitControl();
     eval(code.value);
   }
   catch (e) {
@@ -52,8 +56,4 @@ code.onkeyup = () => {
   console.log(encodecom)
   const newUrl = pureURL + "?data=" + encodecom;
   history.pushState({}, null, newUrl);
-
-
-
-
 }
