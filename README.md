@@ -1,5 +1,5 @@
 # 3d
-Experimental way of quick designing a 3D scene with Processing.js
+Experimental way of quick designing a 3D scene with Processing.js. Try it https://tableaunoir.github.io/3d/.
 
 ![image](https://user-images.githubusercontent.com/43071857/193415295-f8519e3b-9161-4d37-a219-48b656ed15d9.png)
 
