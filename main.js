@@ -7,8 +7,8 @@ const pureURL = initialfullURL.indexOf("?") > 0 ? initialfullURL.substring(0, in
 function load() {
   const url = new URL(document.location.href);
   const params = url.searchParams;
-  const com = decodeURIComponent(params.get('data'));
-  code.value = LZString.decompressFromBase64(com);
+  const com = params.get('data');
+  code.value = LZString.decompressFromEncodedURIComponent(com);
 }
 
 load();
@@ -26,6 +26,17 @@ function pt(x, y, z) {
   sphere(0.05)
   pop();
 }
+
+
+
+function sph(x, y, z, r) {
+  push();
+  tr(x, y, z);
+  noStroke();
+  sphere(r);
+  pop();
+}
+
 
 /**
  * 
@@ -95,6 +106,7 @@ function setup() {
   const canvas = createCanvas(1024, 768, WEBGL).elt;
   wrapper.appendChild(canvas);
   normalMaterial();
+
 }
 
 
@@ -112,8 +124,8 @@ function draw() {
 
     scale(50);
     strokeWeight(1);
-
-    eval(code.value);
+    lights();
+    eval(code.value.replaceAll("•(", "pt(").replaceAll("⚽(", "sphere(").replaceAll("⎯(", "line(").replaceAll("🕂(", "translate(").replaceAll("🌭(", "cylinder("));
   }
   catch (e) {
     error.hidden = false;
@@ -125,8 +137,9 @@ function draw() {
  * @description when the code is changed, we change the URL
  */
 code.onkeyup = () => {
-  const com = LZString.compressToBase64(code.value);
-  const encodecom = encodeURIComponent(com);
-  const newUrl = pureURL + "?data=" + encodecom;
+  const com = LZString.compressToEncodedURIComponent(code.value);
+  const newUrl = pureURL + "?data=" + com;
   history.pushState({}, null, newUrl);
 }
+
+
