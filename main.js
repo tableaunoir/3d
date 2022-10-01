@@ -3,7 +3,7 @@ const pureURL = initialfullURL.indexOf("?") > 0 ? initialfullURL.substring(0, in
 function load() {
   const url = new URL(document.location.href);
   const params = url.searchParams;
-  const com = params.get('data');
+  const com = decodeURIComponent(params.get('data'));
   code.value = LZString.decompressFromBase64(com);
 }
 
@@ -29,25 +29,30 @@ function setup() {
 
 function draw() {
   try {
+    error.hidden = true;
     background("white")
     stroke('black');
     scale(50);
     strokeWeight(2);
 
     orbitControl();
-      eval(code.value);
+    eval(code.value);
   }
   catch (e) {
-    console.log(e)
+    error.hidden = false;
+    error.innerHTML = e;
   }
 }
 
 
 code.onkeyup = () => {
   const com = LZString.compressToBase64(code.value);
-
-  const newUrl = pureURL + "?data=" + com;
+  const encodecom = encodeURIComponent(com);
+  console.log(com)
+  console.log(encodecom)
+  const newUrl = pureURL + "?data=" + encodecom;
   history.pushState({}, null, newUrl);
+
 
 
 
