@@ -35,7 +35,7 @@ function draw() {
     strokeWeight(2);
 
     orbitControl();
-    //  eval(code.value);
+      eval(code.value);
   }
   catch (e) {
     console.log(e)
